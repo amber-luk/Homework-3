@@ -39,7 +39,7 @@ Both of these challenges encompasses a real-world situation where your newfound 
 
   ```text
   Financial Analysis
-  ----------------------------
+  -----------------------------
   Total Months: 86
   Total: $38382578
   Average  Change: $-2315.12
