@@ -1,9 +1,8 @@
 import os
 import csv
 
-# csv_path = os.path.join("Users", "amberlukaesko", "Desktop", "UCI_DBC_ClassRepo", "UCIRV201902DATA3", "02-Homework", "03-Python", "Instructions", "PyBank", "Resources", "budget_data.csv")
 
-csv_path = "/Users/amberlukaesko/Desktop/UCI_DBC_ClassRepo/UCIRV201902DATA3/02-Homework/03-Python/Instructions/PyBank/Resources/budget_data.csv"
+csv_path = os.path.join("Resources", "budget_data.csv")
 
 
 with open(csv_path, newline="") as file:
@@ -14,64 +13,56 @@ with open(csv_path, newline="") as file:
 
     row_count = 0
     net_total = 0
+    changes = []
+    row_val = int(next(budget_data_reader)[1])
+    row_val_2 = row_val
+    months = []
+
     for row in budget_data_reader:
         row_count += 1
         net_total += int(row[1])
+
+
+        change = int(row[1]) - row_val
+        changes.append(change)
         row_val = int(row[1])
 
-with open(csv_path, newline="") as file:
+        months.append(row[0])
 
-    budget_data_reader = csv.reader(file, delimiter=",")
+    greatest_increase = max(changes)
+    increase_index = changes.index(greatest_increase)
 
-    csv_header = next(budget_data_reader)
+    greatest_decrease = min(changes)
+    decrease_index = changes.index(greatest_decrease)
 
-    next(budget_data_reader)
+    greatest_increase_month = months[increase_index]
+    greatest_decrease_month = months[decrease_index]
 
-    change = []
-
-    for row in budget_data_reader:
-        next_row_val = int(row[1])
-        # if int(row[1]) > 0:
-        #     change += row_val - next_row_val
-        # else:
-        #     change += -(row_val + next_row_val)
-
-        # if row_val > 0 and next_row_val > 0:
-        #     change += row_val - next_row_val
-        # elif row_val > 0 and next_row_val < 0:
-        #     change += row_val + next_row_val
-        # elif row_val < 0 and next_row_val > 0:
-        #     change += row_val + next_row_val
-        # elif row_val < 0 and next_row_val < 0:
-        #     change += row_val + next_row_val
-
-        # if row_val > next_row_val:
-        #     change += -abs(row_val - next_row_val)
-        # else:
-        #     change += abs(row_val - next_row_val)
+    # To account for second next()
+    row_count = row_count + 1
+    net_total = net_total + row_val_2
 
 
-        # if row_val > next_row_val:
-        #     if row_val > 0 and next_row_val > 0:
-        #         change += next_row_val - row_val
-        #     elif row_val > 0 and next_row_val < 0:
-        #         change += -(row_val - next_row_val)
-        #     elif row_val < 0 and next_row_val < 0:
-        #         change += (abs(row_val) - abs(next_row_val))
-        # else:
-        #     if row_val > 0 and next_row_val > 0:
-        #         change += next_row_val - row_val
-        #     elif row_val < 0 and next_row_val > 0:
-        #         change += abs(row_val) + abs(next_row_val)
-        #     elif row_val < 0 and next_row_val < 0:
-        #         change += abs(next_row_val) - abs(row_val)
+    average_change = round(sum(changes) / len(changes),2)
 
 
-        [change.append(next_row_val - row_val) for row in range(row_count - 1)]
-        print(change[0:5])
 
-    # average_change = change.sum() / row_count
 
-    print(row_count)
-    print(net_total)
-    # print(average_change)
+print("Financial Analysis")
+print("----------------------------")
+print(f"Total Months: {row_count}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${average_change}")
+print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
+print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})")
+
+
+results = open("Financial_Analysis.txt", 'w')
+results.write(f"""Financial Analysis
+----------------------------
+Total Months: {row_count}
+Total: ${net_total}
+Average Change: ${average_change}
+Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})
+Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})
+""")
