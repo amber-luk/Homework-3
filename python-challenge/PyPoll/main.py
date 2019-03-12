@@ -58,3 +58,11 @@ results.write(f"""Election Results
 Total Votes: {total_votes}
 -------------------------
 """)
+for i in range(len(candidate_list)):
+    next_line = f"{candidate_list[i]}: {percent_of_votes[i]}% ({candidate_votes[i]})"
+    results.write(f"{next_line}\n")
+
+results.write(f"""-------------------------
+Winner: {winning_candidate}
+-------------------------
+""")
