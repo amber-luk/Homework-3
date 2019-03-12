@@ -1,9 +1,8 @@
 import os
 import csv
 
-csv_path = os.path.join( "Resources", "election_data.csv")
 
-# csv_path = "/Users/amberlukaesko/Desktop/UCI_DBC_ClassRepo/UCIRV201902DATA3/02-Homework/03-Python/Instructions/PyPoll/Resources/election_data.csv"
+csv_path = os.path.join( "Resources", "election_data.csv")
 
 
 with open(csv_path, newline="") as file:
